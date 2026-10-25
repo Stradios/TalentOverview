@@ -1,5 +1,19 @@
 # TalentOverview
 
+![Choose your specialization](screenshots/specialization-chooser.png)
+
+**Classic frame (default)**
+
+![Classic frame](screenshots/classic-frame.png)
+
+**Metal frame (optional)**
+
+![Metal frame](screenshots/metal-frame.png)
+
+**Settings**
+
+![Settings](screenshots/settings.png)
+
 A World of Warcraft 3.3.5 addon that replaces the default talent window with one wide window.
 
 - All three talent trees side by side, with the active specialization's own background picture
