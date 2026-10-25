@@ -1,0 +1,17 @@
+## Interface: 30300
+## Title: TalentOverview
+## Notes: All talent trees, glyphs and builds in one window. Replaces the default talent frame.
+## Author: Stradios
+## Version: 1.8
+## SavedVariables: TalentOverviewDB
+
+Core.lua
+Trees.lua
+Glyphs.lua
+Backdrop.lua
+Chrome.lua
+Specs.lua
+Premade.lua
+Builds.lua
+Skins.lua
+Options.lua
