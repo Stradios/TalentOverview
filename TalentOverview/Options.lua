@@ -74,31 +74,31 @@ local function Slider(name, minV, maxV, step, lowText, highText)
 end
 
 -- Appearance
-Header("Appearance", -62)
+Header("Appearance", -56)
 local bgCheck = Checkbox("TalentOverviewOptBg",
-    "Show the talent tree pictures (off: plain parchment)", -82,
+    "Show the talent tree pictures (off: plain parchment)", -74,
     function(v) db().specBg = v end)
 local metalCheck = Checkbox("TalentOverviewOptMetal",
-    "Use the metal window frame (default: the game's classic frame)", -110,
+    "Use the metal window frame (default: the classic frame)", -98,
     function(v) db().metalFrame = v end)
 local iconCheck = Checkbox("TalentOverviewOptClassIcon",
-    "Show the class icon in the portrait ring (off: your character's face)", -138,
+    "Show the class icon in the ring (off: your character's face)", -122,
     function(v) db().classIcon = v end)
 local elvCheck
-local nextY = -166
+local nextY = -146
 if ElvUI then
-    elvCheck = Checkbox("TalentOverviewOptElvUI",
-        "Skin the window with ElvUI", -166,
+    elvCheck = Checkbox("TalentOverviewOptElvUI", "Skin the window with ElvUI", -146,
         function(v) db().useElvUI = v end)
-    nextY = -194
+    nextY = -170
 end
 
 -- Window
-Header("Window", nextY - 14)
-local alphaCheck = Checkbox("TalentOverviewOptAlphaOn", "Enable transparency", nextY - 34,
+Header("Window", nextY - 8)
+local alphaCheck = Checkbox("TalentOverviewOptAlphaOn", "Enable transparency", nextY - 26,
     function(v) db().alphaEnabled = v end)
 local alphaSlider = Slider("TalentOverviewOptAlpha", 0.25, 1, 0.05, "25%", "100%")
-alphaSlider:SetPoint("TOPLEFT", panel, "TOPLEFT", 48, nextY - 78)
+alphaSlider:SetWidth(190)
+alphaSlider:SetPoint("TOPLEFT", panel, "TOPLEFT", 250, nextY - 38)
 alphaSlider:SetScript("OnValueChanged", function(self, value)
     if not db() then return end
     _G["TalentOverviewOptAlphaText"]:SetText(format("Opacity: %d%%", value * 100 + 0.5))
@@ -108,7 +108,8 @@ alphaSlider:SetScript("OnValueChanged", function(self, value)
 end)
 
 local scaleSlider = Slider("TalentOverviewOptScale", 0.4, 1.5, 0.05, "40%", "150%")
-scaleSlider:SetPoint("TOPLEFT", panel, "TOPLEFT", 48, nextY - 136)
+scaleSlider:SetWidth(190)
+scaleSlider:SetPoint("TOPLEFT", panel, "TOPLEFT", 48, nextY - 84)
 scaleSlider:SetScript("OnValueChanged", function(self, value)
     if not db() then return end
     _G["TalentOverviewOptScaleText"]:SetText(format("Window scale: %d%%", value * 100 + 0.5))
@@ -120,30 +121,37 @@ end)
 local resetBtn = CreateFrame("Button", "TalentOverviewOptReset", panel, "UIPanelButtonTemplate")
 resetBtn:SetWidth(170)
 resetBtn:SetHeight(22)
-resetBtn:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, nextY - 180)
+resetBtn:SetPoint("TOPLEFT", panel, "TOPLEFT", 270, nextY - 76)
 resetBtn:SetText("Reset window position")
 resetBtn:SetScript("OnClick", function() SlashCmdList["TALENTOVERVIEW"]("reset") panel.refresh() end)
 
--- Links (the game cannot open a browser: click the box, press Ctrl+C, paste into your browser)
-Header("About", nextY - 222)
+-- About: the game cannot open a browser, so the links are boxes to copy from
+Header("About", nextY - 128)
 local function LinkRow(label, url, y, icon)
     local lead = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
     if icon then
         local t = panel:CreateTexture(nil, "ARTWORK")
         t:SetTexture(TO.TEX .. icon)
-        t:SetWidth(26)
-        t:SetHeight(26)
-        t:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, y + 2)
-        lead:SetPoint("LEFT", t, "RIGHT", 6, 0)
+        t:SetWidth(28)
+        t:SetHeight(28)
+        t:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, y + 3)
+        lead:SetPoint("LEFT", t, "RIGHT", 4, 0)
     else
-        lead:SetPoint("TOPLEFT", panel, "TOPLEFT", 52, y - 4)
+        lead:SetPoint("TOPLEFT", panel, "TOPLEFT", 52, y - 5)
     end
     lead:SetText(label)
-    local eb = CreateFrame("EditBox", nil, panel, "InputBoxTemplate")
+    local eb = CreateFrame("EditBox", nil, panel)
     eb:SetAutoFocus(false)
-    eb:SetWidth(280)
-    eb:SetHeight(20)
-    eb:SetPoint("TOPLEFT", panel, "TOPLEFT", 190, y - 2)
+    eb:SetFontObject(ChatFontNormal)
+    eb:SetWidth(270)
+    eb:SetHeight(22)
+    eb:SetTextInsets(6, 6, 0, 0)
+    eb:SetBackdrop({ bgFile = "Interface\\Buttons\\WHITE8X8",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 12,
+        insets = { left = 3, right = 3, top = 3, bottom = 3 } })
+    eb:SetBackdropColor(0, 0, 0, 0.6)
+    eb:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+    eb:SetPoint("TOPLEFT", panel, "TOPLEFT", 120, y - 3)
     eb:SetText(url)
     eb:SetCursorPosition(0)
     eb:SetScript("OnEditFocusGained", function(self) self:HighlightText() end)
@@ -151,11 +159,11 @@ local function LinkRow(label, url, y, icon)
     eb:SetScript("OnTextChanged", function(self) if self:GetText() ~= url then self:SetText(url) end end)
     return eb
 end
-LinkRow("GitHub", "https://github.com/Stradios/TalentOverview", nextY - 244)
-LinkRow("Buy me a coffee (Ko-fi)", "https://ko-fi.com/stradiostv", nextY - 278, "kofi")
+LinkRow("GitHub", "https://github.com/Stradios/TalentOverview", nextY - 152)
+LinkRow("Ko-fi", "https://ko-fi.com/stradiostv", nextY - 184, "kofi")
 local credit = panel:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
-credit:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, nextY - 314)
-credit:SetText("TalentOverview by Stradios.  Click a box and press Ctrl+C to copy the link.")
+credit:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, nextY - 218)
+credit:SetText("By Stradios. Click a box, press Ctrl+C, paste the link in your browser.")
 
 -- push database values into the widgets
 function panel.refresh()
