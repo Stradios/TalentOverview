@@ -161,7 +161,7 @@ local function LinkRow(label, url, y, icon)
 end
 LinkRow("GitHub", "https://github.com/Stradios/TalentOverview", nextY - 152)
 LinkRow("Ko-fi", "https://ko-fi.com/stradiostv", nextY - 184, "kofi")
-local credit = panel:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
+local credit = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 credit:SetPoint("TOPLEFT", panel, "TOPLEFT", 20, nextY - 218)
 credit:SetText("By Stradios. Click a box, press Ctrl+C, paste the link in your browser.")
 
