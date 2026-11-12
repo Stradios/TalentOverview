@@ -1,4 +1,5 @@
 # TalentOverview
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M8K423K344)
 
 ![Choose your specialization](screenshots/specialization-chooser.png)
 
